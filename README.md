@@ -1,4 +1,4 @@
-# travella-admin
+# Travella-admin
 
 ## Project setup
 ```
