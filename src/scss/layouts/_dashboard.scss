@@ -414,13 +414,13 @@
     background: transparent;
     height: auto;
     padding: 16px 0px;
-    margin: 10px 4px;
+    margin: 15px 4px;
     line-height: inherit;
     border-radius: 12px;
     transition: 0.2s;
 
     @media (min-width: $md) {
-      margin: 10px 20px;
+      margin: 15px 20px 35px;
     }
     @media (max-width: $md) {
 	  padding: 16px;
@@ -526,7 +526,7 @@
     .ant-page-header-heading-title {
       font-weight: $fw-bold;
       font-size: 22px;
-      line-height: 24px;
+      line-height: 28px;
       margin-top: 5px;
     }
   }

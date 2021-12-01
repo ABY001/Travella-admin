@@ -51,11 +51,12 @@ const routes = [
     layout: "dashboard",
     component: () => import("../views/Setting.vue"),
   },
-  //   {
-  //     path: "/logout",
-  //     name: "Logout",
-  //     component: () => import("../views/Logout.vue"),
-  //   },
+  {
+    path: "/login",
+    name: "Login",
+    layout: "default",
+    component: () => import("../views/Login.vue"),
+  },
 ];
 
 const router = new VueRouter({

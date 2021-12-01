@@ -204,7 +204,7 @@
         </router-link>
       </a-menu-item>
       <a-menu-item>
-        <router-link>
+        <router-link to="/login">
           <span class="icon">
             <svg
               width="20"
