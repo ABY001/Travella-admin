@@ -29,9 +29,9 @@
         <DashboardHeader
           :sidebarCollapsed="sidebarCollapsed"
           :navbarFixed="navbarFixed"
-          @toggleSettingsDrawer="toggleSettingsDrawer"
           @toggleSidebar="toggleSidebar"
         ></DashboardHeader>
+        <!-- @toggleSettingsDrawer="toggleSettingsDrawer" -->
         <!-- / Layout Header's Conditionally Fixed Wrapper -->
 
         <!-- Page Content -->
@@ -67,6 +67,12 @@
         ></div>
         <!-- / Sidebar Overlay -->
       </a-layout>
+
+      <!-- Settings Drawer -->
+      <AppDrawer
+        :showSettingsDrawer="showSettingsDrawer"
+        @toggleSettingsDrawer="toggleSettingsDrawer"
+      ></AppDrawer>
     </a-layout>
     <!-- / Dashboard Layout -->
   </div>
@@ -75,12 +81,14 @@
 <script>
 import DashboardSidebar from "../components/Sidebars/DashboardSidebar";
 import DashboardHeader from "../components/Headers/DashboardHeader";
+import AppDrawer from "../components/Drawers/AppDrawer";
 
 export default {
   name: "dashboard",
   components: {
     DashboardSidebar,
     DashboardHeader,
+    AppDrawer,
   },
   data() {
     return {

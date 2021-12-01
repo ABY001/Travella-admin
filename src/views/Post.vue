@@ -9,39 +9,53 @@
       <!-- Authors Table Column -->
       <a-col :span="24" class="mb-24">
         <!-- Authors Table Card -->
-        <CardTable :data="table1Data" :columns="table1Columns"></CardTable>
+        <CardTable
+          :data="Post"
+          :columns="table1Columns"
+          @toggleSettingsDrawer="toggleSettingsDrawer"
+        ></CardTable>
         <!-- / Authors Table Card -->
       </a-col>
       <!-- / Authors Table Column -->
     </a-row>
     <!-- </div>
   </div> -->
+    <AppDrawer
+      :showSettingsDrawer="showSettingsDrawer"
+      @toggleSettingsDrawer="toggleSettingsDrawer"
+    ></AppDrawer>
   </div>
 </template>
 
 <script>
 import CardTable from "../components/Cards/CardTable";
+import AppDrawer from "../components/Drawers/AppDrawer";
+import todos from "../logic";
 
 const table1Columns = [
   {
-    title: "Ticket details",
-    dataIndex: "Ticket",
-    scopedSlots: { customRender: "Ticket" },
+    title: "Post details",
+    dataIndex: "title",
+    scopedSlots: { customRender: "title" },
+    key: "title",
   },
   {
     title: "Status",
-    dataIndex: "Status",
-    scopedSlots: { customRender: "Status" },
+    dataIndex: "createdAt",
+    scopedSlots: { customRender: "createdAt" },
+    key: "createdAt",
   },
   {
     title: "Date",
-    dataIndex: "Date",
-    scopedSlots: { customRender: "Date" },
+    dataIndex: "createdAt",
+    scopedSlots: { customRender: "createdAt2" },
+    key: "createdAt2",
   },
   {
-    title: "Priority",
-    dataIndex: "Priority",
-    scopedSlots: { customRender: "Priority" },
+    title: "Author",
+    dataIndex: "author",
+    scopedSlots: { customRender: "author" },
+    key: "author",
   },
   {
     title: "",
@@ -49,124 +63,32 @@ const table1Columns = [
     width: 30,
   },
 ];
-
-const table1Data = [
-  {
-    key: "1",
-    Ticket: {
-      avatar: "images/face-2.jpg",
-      name: "Travella Goes live with new update ",
-      email: "Updated 1 day ago",
-    },
-    Status: {
-      job: "Published",
-      department: "on 24.05.2019",
-    },
-    Date: {
-      job: "May 26, 2019",
-      department: "6:30 PM",
-    },
-    Priority: "HIGH",
-  },
-  {
-    key: "2",
-    Ticket: {
-      avatar: "images/face-2.jpg",
-      name: "Travella Goes live with new update ",
-      email: "Updated 1 day ago",
-    },
-    Status: {
-      job: "Published",
-      department: "on 24.05.2019",
-    },
-    Date: {
-      job: "May 26, 2019",
-      department: "6:30 PM",
-    },
-    Priority: "LOW",
-  },
-  {
-    key: "3",
-    Ticket: {
-      avatar: "images/face-2.jpg",
-      name: "Travella Goes live with new update ",
-      email: "Updated 1 day ago",
-    },
-    Status: {
-      job: "Published",
-      department: "on 24.05.2019",
-    },
-    Date: {
-      job: "May 26, 2019",
-      department: "6:30 PM",
-    },
-    Priority: "NORMAL",
-  },
-  {
-    key: "4",
-    Ticket: {
-      avatar: "images/face-2.jpg",
-      name: "Travella Goes live with new update ",
-      email: "Updated 1 day ago",
-    },
-    Status: {
-      job: "Published",
-      department: "on 24.05.2019",
-    },
-    Date: {
-      job: "May 26, 2019",
-      department: "6:30 PM",
-    },
-    Priority: "NORMAL",
-  },
-  {
-    key: "5",
-    Ticket: {
-      avatar: "images/face-2.jpg",
-      name: "Travella Goes live with new update ",
-      email: "Updated 1 day ago",
-    },
-    Status: {
-      job: "Published",
-      department: "on 24.05.2019",
-    },
-    Date: {
-      job: "May 26, 2019",
-      department: "6:30 PM",
-    },
-    Priority: "NORMAL",
-  },
-  {
-    key: "6",
-    Ticket: {
-      avatar: "images/face-2.jpg",
-      name: "Travella Goes live with new update ",
-      email: "Updated 1 day ago",
-    },
-    Status: {
-      job: "Published",
-      department: "on 24.05.2019",
-    },
-    Date: {
-      job: "May 26, 2019",
-      department: "6:30 PM",
-    },
-    Priority: "NORMAL",
-  },
-];
-
 export default {
   components: {
     CardTable,
+    AppDrawer,
   },
   data() {
     return {
       // Associating "Authors" table data with its corresponding property.
-      table1Data: table1Data,
+      Post: [],
 
       // Associating "Authors" table columns with its corresponding property.
       table1Columns: table1Columns,
+
+       // Settings drawer visiblility status.
+      showSettingsDrawer: false,
     };
+  },
+  methods: {
+    toggleSettingsDrawer(value) {
+      this.showSettingsDrawer = value;
+    },
+  },
+  async created() {
+    let response = await todos.get("blog/all");
+    this.Post = response.data.data;
+    console.log(response.data.data);
   },
 };
 </script>

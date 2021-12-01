@@ -15,41 +15,59 @@
           :md="12"
           style="display: flex; align-items: center; justify-content: flex-end"
         >
+          <a-button type="primary" @click="$emit('toggleSettingsDrawer', true)"
+            >Create Post
+          </a-button>
+        </a-col>
+        <!-- <a-col
+          :span="24"
+          :md="12"
+          style="display: flex; align-items: center; justify-content: flex-end"
+        >
           <a-radio-group v-model="authorsHeaderBtns" size="small">
             <a-radio-button value="all">ALL</a-radio-button>
             <a-radio-button value="low">LOW</a-radio-button>
             <a-radio-button value="normal">NORMAL</a-radio-button>
             <a-radio-button value="high">HIGH</a-radio-button>
           </a-radio-group>
-        </a-col>
+        </a-col> -->
       </a-row>
     </template>
-    <a-table :columns="columns" :data-source="data" :pagination="true">
-      <template slot="Ticket" slot-scope="Ticket">
-        <div class="table-avatar-info">
-          <!-- <a-avatar shape="square" :src="Ticket.avatar" /> -->
-          <div class="avatar-info">
-            <h6>{{ Ticket.name }}</h6>
-            <p>{{ Ticket.email }}</p>
-          </div>
-        </div>
-      </template>
-
-      <template slot="Status" slot-scope="Status">
+    <a-table
+      :columns="columns"
+      :data-source="data"
+      rowKey="_id"
+      :pagination="true"
+    >
+      <!-- 
+      <template slot="title" slot-scope="title">
         <div class="author-info">
-          <h6 class="m-0">{{ Status.job }}</h6>
-          <p class="m-0 font-regular text-muted">{{ Status.department }}</p>
+          <h6 class="m-0">Published</h6>
+          <p class="m-0 font-regular text-muted">on {{ title }}</p>
         </div>
-      </template>
+      </template> -->
 
-      <template slot="Date" slot-scope="Date">
+      <template slot="createdAt" slot-scope="createdAt">
         <div class="author-info">
-          <h6 class="m-0">{{ Date.job }}</h6>
-          <p class="m-0 font-regular text-muted">{{ Date.department }}</p>
+          <h6 class="m-0">Published</h6>
+          <p class="m-0 font-regular text-muted">on {{ createdAt }}</p>
         </div>
       </template>
 
-      <template slot="Priority" slot-scope="Priority">
+      <template slot="createdAt2" slot-scope="createdAt">
+        <div class="author-info">
+          <h6 class="m-0">{{ createdAt }}</h6>
+          <p class="m-0 font-regular text-muted">{{ createdAt }}</p>
+        </div>
+      </template>
+
+      <template slot="author" slot-scope="author">
+        <div class="author-info">
+          <h6 class="m-0">{{ author }}</h6>
+        </div>
+      </template>
+
+      <!-- <template slot="Priority" slot-scope="Priority">
         <a-tag
           class="tag-status"
           :color="
@@ -60,10 +78,9 @@
               : 'green'
           "
         >
-          <!-- :class="Priority ? 'ant-tag-primary' : 'ant-tag-muted'" -->
           {{ Priority.toUpperCase() }}
         </a-tag>
-      </template>
+      </template> -->
 
       <template slot="action" slot-scope="row">
         <!-- <a-button type="link" :data-id="row.key" class="btn-edit">
@@ -83,7 +100,9 @@
             <a-icon type="more" :style="{ color: '#000000' }" />
           </a>
           <a-menu slot="overlay">
-            <a-menu-item key="0"><a-icon type="eye" /> View </a-menu-item>
+            <a-menu-item key="0" @click="$emit('toggleSettingsDrawer', true)"
+              ><a-icon type="eye" /> View
+            </a-menu-item>
             <a-menu-item key="1"><a-icon type="edit" /> Edit </a-menu-item>
             <a-menu-item key="2" :style="{ color: 'red' }"
               ><a-icon type="delete" /> Delete

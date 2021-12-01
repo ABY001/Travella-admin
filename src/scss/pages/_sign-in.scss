@@ -4,34 +4,50 @@
 //
 
 // Sign In Page
-.sign-in___container {
-  background: #363740;
-  .sign-in {
-    background: white;
-    padding: 0px 20px;
-	max-width: 500px;
-	max-height: 500px;
-    .col-img img {
-      width: 100%;
-      max-width: 500px;
-      margin: auto;
-      display: block;
+.sign-in {
+  background: white;
+  padding: 0px 20px;
+  max-width: 500px;
+  max-height: 500px;
+  h3 {
+    font-size: 19px;
+    line-height: 24px;
+  }
+  h1 {
+    font-size: 24px;
+    line-height: 30px;
+    margin-top: 1.5rem;
+  }
+  h5 {
+    font-size: 14px;
+    line-height: 20px;
+  }
+  img {
+    width: 100%;
+    max-width: 100px;
+    margin: 1rem auto;
+    display: block;
 
-      @media (min-width: $lg) {
-        margin: 0;
-      }
-    }
-    .col-form .ant-switch {
-      margin-right: 5px;
-    }
-    .ant-form-item-label {
-      line-height: 28px;
-    }
-    .ant-form-item label {
-      font-size: 13px;
-      font-weight: $fw-semibold;
-      color: $color-gray-12;
-    }
+    // @media (min-width: $lg) {
+    //   margin: 0;
+    // }
+  }
+  .login-form-button {
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+    background: #ff6600;
+    // box-shadow: 0px 4px 12px rgba(55, 81, 255, 0.24);
+    border-radius: 8px;
+  }
+  .col-form .ant-switch {
+    margin-right: 5px;
+  }
+  .ant-form-item-label {
+    line-height: 28px;
+  }
+  .ant-form-item label {
+    font-size: 13px;
+    font-weight: $fw-semibold;
+    color: $color-gray-12;
   }
 }
 // / Sign In Page

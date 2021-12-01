@@ -1,16 +1,40 @@
 <template>
-  <div class="sign-in___container">
+  <a-modal
+    v-model="modalVisible"
+    centered
+    :closable="false"
+    :maskClosable="false"
+    :footer="null"
+  >
     <div class="sign-in">
-      <!-- <a-row type="flex" :gutter="[24,24]" justify="space-around" align="middle"> -->
-
-      <!-- Sign In Form Column -->
-      <!-- <a-row type="flex" justify="center"> -->
-      <img src="images/logo.png" alt="" />
-      <h3 class="font-regular text-muted">Dashboard Kit</h3>
-      <h1 class="mb-15">Log In to Admin Dashboard</h1>
-      <h5 class="font-regular text-muted">
-        Enter your email and password below
-      </h5>
+      <a-row type="flex" justify="center"
+        ><a-col
+          :span="24"
+          style="display: flex; align-items: center; justify-content: center"
+        >
+          <img src="images/logo.png" alt=""
+        /></a-col>
+        <a-col
+          :span="24"
+          style="display: flex; align-items: center; justify-content: center"
+        >
+          <h3 class="font-regular text-muted">Dashboard Kit</h3></a-col
+        >
+        <a-col
+          :span="24"
+          style="display: flex; align-items: center; justify-content: center"
+        >
+          <h1 class="mb-15">Log In to Admin Dashboard</h1></a-col
+        >
+        <a-col
+          :span="24"
+          style="display: flex; align-items: center; justify-content: center"
+        >
+          <h5 class="font-regular text-muted">
+            Enter your email and password below
+          </h5></a-col
+        ></a-row
+      >
 
       <!-- Sign In Form -->
       <a-form
@@ -74,13 +98,14 @@
 
       <!-- </a-row> -->
     </div>
-  </div>
+  </a-modal>
 </template>
 
 <script>
 export default {
   data() {
     return {
+      modalVisible: true,
       // Binded model property for "Sign In Form" switch button for "Remember Me" .
       // rememberMe: true,
     };
@@ -106,5 +131,8 @@ export default {
 <style lang="scss">
 body {
   background-color: #ffffff;
+}
+.ant-modal-mask {
+  background-color: #363740;
 }
 </style>

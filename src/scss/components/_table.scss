@@ -19,6 +19,11 @@
 .ant-table-tbody > tr:last-child > td {
   border-bottom: 0;
 }
+.ant-table-tbody > tr:first-child > td {
+  font-size: 14px;
+  font-weight: 600;
+  color: #595959;
+}
 .ant-table-tbody > tr > td h6 {
   font-size: 14px;
   font-weight: $fw-semibold;
@@ -127,20 +132,20 @@
 
 .ant-tag-red {
   color: white;
-  background: #F12B2C;
-  border-color: #F12B2C;
+  background: #f12b2c;
+  border-color: #f12b2c;
 }
 
 .ant-tag-yellow {
   color: white;
-  background: #FEC400;
-  border-color:#FEC400;
+  background: #fec400;
+  border-color: #fec400;
 }
 
 .ant-tag-green {
   color: white;
-  background: #29CC97;
-  border-color: #29CC97;
+  background: #29cc97;
+  border-color: #29cc97;
 }
 
 .ant-tag {
