@@ -8,19 +8,31 @@
   background: white;
   padding: 0px 20px;
   max-width: 500px;
-  max-height: 500px;
+  // max-height: 500px;
   h3 {
     font-size: 19px;
     line-height: 24px;
+    @media (max-width: $sm) {
+      font-size: 17.5px;
+      line-height: 22px;
+    }
   }
   h1 {
     font-size: 24px;
     line-height: 30px;
     margin-top: 1.5rem;
+    @media (max-width: $sm) {
+      font-size: 21px;
+      line-height: 26px;
+    }
   }
   h5 {
     font-size: 14px;
     line-height: 20px;
+    @media (max-width: $sm) {
+      font-size: 13px;
+      line-height: 19px;
+    }
   }
   img {
     width: 100%;
@@ -49,5 +61,16 @@
     font-weight: $fw-semibold;
     color: $color-gray-12;
   }
+}
+
+.login-modal.ant-modal {
+  border: 1px solid #dfe0eb;
+  box-sizing: border-box;
+  border-radius: 8px;
+}
+
+.error {
+  color: red;
+  margin-bottom: 12px;
 }
 // / Sign In Page

@@ -8,17 +8,29 @@
     <template #title>
       <a-row type="flex" align="middle">
         <a-col :span="24" :md="12">
-          <h5 class="font-semibold m-0">All Posts</h5>
+          <h5 class="font-semibold m-0">All FAQs</h5>
         </a-col>
         <a-col
           :span="24"
           :md="12"
           style="display: flex; align-items: center; justify-content: flex-end"
         >
-          <a-button type="primary" @click="$emit('toggleSettingsDrawer', true)"
-            >Create Post
+          <a-button type="primary" @click="$emit('toggleFAQDrawer', true)"
+            >Create FAQ
           </a-button>
         </a-col>
+        <!-- <a-col
+          :span="24"
+          :md="12"
+          style="display: flex; align-items: center; justify-content: flex-end"
+        >
+          <a-radio-group v-model="authorsHeaderBtns" size="small">
+            <a-radio-button value="all">ALL</a-radio-button>
+            <a-radio-button value="low">LOW</a-radio-button>
+            <a-radio-button value="normal">NORMAL</a-radio-button>
+            <a-radio-button value="high">HIGH</a-radio-button>
+          </a-radio-group>
+        </a-col> -->
       </a-row>
     </template>
     <a-table
@@ -35,16 +47,13 @@
         </div>
       </template> -->
 
-      <template slot="createdAt" slot-scope="createdAt">
+      <template slot="question" slot-scope="question">
         <div class="author-info">
-          <h6 class="m-0">Published</h6>
-          <p class="m-0 font-regular text-muted">
-            on {{ convertTime(createdAt) }}
-          </p>
+          <h6 class="m-0">{{ question }}</h6>
         </div>
       </template>
 
-      <template slot="createdAt2" slot-scope="createdAt">
+      <template slot="createdAt" slot-scope="createdAt">
         <div class="author-info">
           <h6 class="m-0">{{ convertTime1(createdAt) }}</h6>
           <p class="m-0 font-regular text-muted">
@@ -53,32 +62,13 @@
         </div>
       </template>
 
-      <template slot="author" slot-scope="author">
+      <template slot="answer" slot-scope="answer">
         <div class="author-info">
-          <h6 class="m-0">{{ author }}</h6>
+          <h6 class="m-0">{{ answer }}</h6>
         </div>
       </template>
 
-      <!-- <template slot="Priority" slot-scope="Priority">
-        <a-tag
-          class="tag-status"
-          :color="
-            Priority === 'HIGH'
-              ? 'red'
-              : Priority === 'LOW'
-              ? 'yellow'
-              : 'green'
-          "
-        >
-          {{ Priority.toUpperCase() }}
-        </a-tag>
-      </template> -->
-
       <template slot="action" slot-scope="row">
-        <!-- <a-button type="link" :data-id="row.key" class="btn-edit">
-          Edit
-        </a-button> -->
-
         <a-dropdown :data-id="row.key" :trigger="['click']">
           <a
             class="ant-dropdown-link"
@@ -92,11 +82,14 @@
             <a-icon type="more" :style="{ color: '#000000' }" />
           </a>
           <a-menu slot="overlay">
-            <a-menu-item key="0" @click="$emit('toggleSettingsDrawer', true)"
+            <a-menu-item key="0" @click="viewRecord(row)"
               ><a-icon type="eye" /> View
             </a-menu-item>
-            <a-menu-item key="1"><a-icon type="edit" /> Edit </a-menu-item>
-            <a-menu-item key="2" :style="{ color: 'red' }"
+            <a-menu-item key="1" @click="editRecord(row)"><a-icon type="edit" /> Edit </a-menu-item>
+            <a-menu-item
+              key="2"
+              @click="deleteRecord(row)"
+              :style="{ color: 'red' }"
               ><a-icon type="delete" /> Delete
             </a-menu-item>
           </a-menu></a-dropdown
@@ -109,6 +102,8 @@
 
 <script>
 import moment from "moment";
+import todos from "@/logic";
+
 export default {
   props: {
     data: {
@@ -119,6 +114,10 @@ export default {
       type: Array,
       default: () => [],
     },
+    // editRecord: {
+    //   type: Object,
+    //   default: () => {},
+    // },
   },
   data() {
     return {
@@ -127,6 +126,32 @@ export default {
     };
   },
   methods: {
+    viewRecord(row) {
+      console.log(row);
+      this.$emit("viewFAQRecord", row);
+    },
+    editRecord(row) {
+      console.log(row);
+      this.$emit("editFAQRecord", row);
+    },
+    async deleteRecord(row) {
+      console.log(row);
+      try {
+        let response = await todos.delete(`faq/${row._id}`);
+        console.log(response.data);
+        if (response.data.status === true) {
+          this.$notification.success({
+            message: "Success",
+            description: "Deleted successfully",
+          });
+          this.$emit("fetchUsers");
+        }
+      } catch (error) {
+        const { response } = error;
+        console.log(response);
+        return;
+      }
+    },
     convertTime(time) {
       if (!time) {
         return;

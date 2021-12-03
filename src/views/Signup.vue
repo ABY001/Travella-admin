@@ -25,14 +25,14 @@
           :span="24"
           style="display: flex; align-items: center; justify-content: center"
         >
-          <h1 class="mb-15">Log In to Admin Dashboard</h1></a-col
+          <h1 class="mb-15">Sign Up to Admin Dashboard</h1></a-col
         >
         <a-col
           :span="24"
           style="display: flex; align-items: center; justify-content: center"
         >
           <h5 class="font-regular text-muted">
-            Enter your email and password below
+            Enter your email, password and token below
           </h5></a-col
         ></a-row
       >
@@ -72,6 +72,19 @@
             placeholder="Password"
           />
         </a-form-item>
+        <a-form-item class="mb-5" label="TOKEN" :colon="false">
+          <a-input
+            v-decorator="[
+              'token',
+              {
+                rules: [
+                  { required: true, message: 'Please input your Token!' },
+                ],
+              },
+            ]"
+            placeholder="Token"
+          />
+        </a-form-item>
         <!-- <a-form-item class="mb-10">
           <a-switch v-model="rememberMe" /> Remember Me
         </a-form-item> -->
@@ -82,7 +95,7 @@
             html-type="submit"
             class="login-form-button"
           >
-            LOG IN
+            SIGN UP
           </a-button>
         </a-form-item>
       </a-form>
@@ -90,9 +103,9 @@
       <!-- / Sign In Form -->
       <a-row type="flex" justify="center">
         <h5 class="font-semibold text-muted">
-          Don't have an account?
-          <router-link to="/signup" class="font-bold text-primary"
-            >Sign Up</router-link
+          Have an existing account?
+          <router-link to="/login" class="font-bold text-primary"
+            >Log in</router-link
           >
         </h5></a-row
       >
@@ -109,8 +122,10 @@ import todos from "../logic";
 export default {
   data() {
     return {
+      email: "",
+      password: "",
+      token: "",
       modalVisible: true,
-      auth: [],
       error: false,
       errorMsg: "",
       // Binded model property for "Sign In Form" switch button for "Remember Me" .
@@ -134,7 +149,7 @@ export default {
         }
       });
       try {
-        let response = await todos.create("auth/signin", this.obj);
+        let response = await todos.create("auth/signup", this.obj);
         this.auth = response.data;
         console.log(response.data);
         if (this.auth.status === true) {

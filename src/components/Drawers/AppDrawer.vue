@@ -47,15 +47,9 @@
     </a-button>
     <!-- / Settings Drawer Close Button -->
     <div>
-      <a-input
-        v-model="author"
-        placeholder="Post Author"
-      />
+      <a-input v-model="author" placeholder="Post Author" />
       <div style="margin: 24px 0" />
-      <a-input
-        v-model="title"
-        placeholder="Post Title"
-      />
+      <a-input v-model="title" placeholder="Post Title" />
       <div style="margin: 24px 0" />
       <a-textarea
         v-model="content"
@@ -66,7 +60,7 @@
       <a-upload-dragger
         name="file"
         :multiple="false"
-        action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+        :before-upload="beforeUpload"
         @change="handleChange"
       >
         <p class="ant-upload-drag-icon">
@@ -81,10 +75,10 @@
       <div style="margin: 24px 0" />
       <a-row>
         <a-col :span="24" :style="{ textAlign: 'right' }">
-          <a-button type="primary" html-type="submit"> Submit </a-button>
-          <a-button :style="{ marginLeft: '8px' }" @click="handleReset">
+          <a-button :style="{ marginRight: '8px' }" @click="handleReset">
             Clear
-          </a-button></a-col
+          </a-button>
+          <a-button type="primary" html-type="submit"> Submit </a-button></a-col
         ></a-row
       >
     </div>
@@ -105,6 +99,7 @@ export default {
       title: "",
       content: "",
       author: "",
+      image: "",
       // The wrapper element to attach dropdowns to.
       wrapper: document.body,
     };
@@ -115,16 +110,39 @@ export default {
   },
   methods: {
     handleChange(info) {
-      const status = info.file.status;
-      if (status !== "uploading") {
-        console.log(info.file, info.fileList);
+      // const status = info.file.status;
+      if (info.file.status === "uploading") {
+        // console.log(info.file, info.fileList);
+        console.log("hi1b2");
+        return;
       }
-      if (status === "done") {
+      if (info.file.status === "done") {
         this.$message.success(`${info.file.name} file uploaded successfully.`);
-      } else if (status === "error") {
-        this.$message.error(`${info.file.name} file upload failed.`);
+        this.getBase64(info.file.originFileObj, (imageUrl) => {
+          this.image = imageUrl;
+        });
       }
     },
+
+    beforeUpload(file) {
+      const isJpgOrPng =
+        file.type === "image/jpeg" || file.type === "image/png";
+      if (!isJpgOrPng) {
+        this.$message.error("You can only upload JPG file!");
+      }
+      const isLt2M = file.size / 1024 / 1024 < 2;
+      if (!isLt2M) {
+        this.$message.error("Image must smaller than 2MB!");
+      }
+      return isJpgOrPng && isLt2M;
+    },
+
+    getBase64(img, callback) {
+      const reader = new FileReader();
+      reader.addEventListener("load", () => callback(reader.result));
+      reader.readAsDataURL(img);
+    },
+
     handleReset() {
       this.title = "";
       this.content = "";

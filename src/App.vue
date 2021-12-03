@@ -14,7 +14,10 @@ export default {
     layout() {
       return (
         "layout-" +
-        (this.$route.name === "Login" ? "default" : "dashboard").toLowerCase()
+        (this.$route.name === "Login" || this.$route.name === "Signup"
+          ? "default"
+          : "dashboard"
+        ).toLowerCase()
       );
     },
   },

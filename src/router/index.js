@@ -34,6 +34,12 @@ const routes = [
     component: () => import("../views/Registrations.vue"),
   },
   {
+    path: "/frequently-asked-questions",
+    name: "FAQs",
+    layout: "dashboard",
+    component: () => import("../views/FAQs.vue"),
+  },
+  {
     path: "/support",
     name: "Support",
     layout: "dashboard",
@@ -57,12 +63,24 @@ const routes = [
     layout: "default",
     component: () => import("../views/Login.vue"),
   },
+  {
+    path: "/signup",
+    name: "Signup",
+    layout: "default",
+    component: () => import("../views/Signup.vue"),
+  },
 ];
 
 const router = new VueRouter({
   mode: "history",
-  base: process.env.BASE_URL,
   routes,
+});
+
+router.beforeEach((to, from, next) => {
+  let auth = localStorage.getItem("token");
+  if (to.name !== "Login" && to.name !== "Signup" && !auth)
+    next({ name: "Login" });
+  else next();
 });
 
 export default router;

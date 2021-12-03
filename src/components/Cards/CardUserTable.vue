@@ -8,17 +8,29 @@
     <template #title>
       <a-row type="flex" align="middle">
         <a-col :span="24" :md="12">
-          <h5 class="font-semibold m-0">All Posts</h5>
+          <h5 class="font-semibold m-0">All Users</h5>
         </a-col>
         <a-col
           :span="24"
           :md="12"
           style="display: flex; align-items: center; justify-content: flex-end"
         >
-          <a-button type="primary" @click="$emit('toggleSettingsDrawer', true)"
+          <!-- <a-button type="primary" @click="$emit('toggleSettingsDrawer', true)"
             >Create Post
-          </a-button>
+          </a-button> -->
         </a-col>
+        <!-- <a-col
+          :span="24"
+          :md="12"
+          style="display: flex; align-items: center; justify-content: flex-end"
+        >
+          <a-radio-group v-model="authorsHeaderBtns" size="small">
+            <a-radio-button value="all">ALL</a-radio-button>
+            <a-radio-button value="low">LOW</a-radio-button>
+            <a-radio-button value="normal">NORMAL</a-radio-button>
+            <a-radio-button value="high">HIGH</a-radio-button>
+          </a-radio-group>
+        </a-col> -->
       </a-row>
     </template>
     <a-table

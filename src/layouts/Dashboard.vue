@@ -73,6 +73,12 @@
         :showSettingsDrawer="showSettingsDrawer"
         @toggleSettingsDrawer="toggleSettingsDrawer"
       ></AppDrawer>
+
+      <!-- <AppFAQDrawer
+        :showFAQDrawer="showFAQDrawer"
+        @toggleFAQDrawer="toggleFAQDrawer"
+      >
+      </AppFAQDrawer> -->
     </a-layout>
     <!-- / Dashboard Layout -->
   </div>
@@ -82,6 +88,7 @@
 import DashboardSidebar from "../components/Sidebars/DashboardSidebar";
 import DashboardHeader from "../components/Headers/DashboardHeader";
 import AppDrawer from "../components/Drawers/AppDrawer";
+// import AppFAQDrawer from '../components/Drawers/AppFAQDrawer.vue';
 
 export default {
   name: "dashboard",
@@ -89,6 +96,7 @@ export default {
     DashboardSidebar,
     DashboardHeader,
     AppDrawer,
+    // AppFAQDrawer,
   },
   data() {
     return {
@@ -106,6 +114,9 @@ export default {
 
       // Settings drawer visiblility status.
       showSettingsDrawer: false,
+
+      // Settings drawer visiblility status.
+      showFAQDrawer: false,
     };
   },
   methods: {
@@ -114,6 +125,9 @@ export default {
     },
     toggleSettingsDrawer(value) {
       this.showSettingsDrawer = value;
+    },
+    toggleFAQDrawer(value) {
+      this.showFAQDrawer = value;
     },
     toggleNavbarPosition(value) {
       this.navbarFixed = value;
