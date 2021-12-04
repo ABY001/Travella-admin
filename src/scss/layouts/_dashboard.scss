@@ -128,9 +128,9 @@
         background-color: transparent;
       }
 
-	  &.space {
-		  margin-top: 40px;
-	  }
+      &.space {
+        margin-top: 40px;
+      }
 
       a {
         padding: $submenu-links-p;
@@ -147,6 +147,7 @@
         border-radius: 6px;
         justify-content: center;
         align-items: center;
+        margin-top: 4px;
         margin-right: 11px;
         vertical-align: middle;
       }
@@ -423,7 +424,7 @@
       margin: 15px 20px 35px;
     }
     @media (max-width: $md) {
-	  padding: 16px;
+      padding: 16px;
     }
   }
   &.navbar-fixed {

@@ -31,7 +31,7 @@
           :navbarFixed="navbarFixed"
           @toggleSidebar="toggleSidebar"
         ></DashboardHeader>
-        <!-- @toggleSettingsDrawer="toggleSettingsDrawer" -->
+        <!-- @togglePostDrawer="togglePostDrawer" -->
         <!-- / Layout Header's Conditionally Fixed Wrapper -->
 
         <!-- Page Content -->
@@ -41,7 +41,7 @@
         <!-- / Page Content -->
 
         <!-- Floating Action Button For Toggling Settings Drawer -->
-        <!-- <a-button class="fab" shape="circle" @click="showSettingsDrawer = true">
+        <!-- <a-button class="fab" shape="circle" @click="showPostDrawer = true">
           <svg
             width="20"
             height="20"
@@ -69,10 +69,10 @@
       </a-layout>
 
       <!-- Settings Drawer -->
-      <AppDrawer
-        :showSettingsDrawer="showSettingsDrawer"
-        @toggleSettingsDrawer="toggleSettingsDrawer"
-      ></AppDrawer>
+      <!-- <AppDrawer
+        :showPostDrawer="showPostDrawer"
+        @togglePostDrawer="togglePostDrawer"
+      ></AppDrawer> -->
 
       <!-- <AppFAQDrawer
         :showFAQDrawer="showFAQDrawer"
@@ -87,7 +87,7 @@
 <script>
 import DashboardSidebar from "../components/Sidebars/DashboardSidebar";
 import DashboardHeader from "../components/Headers/DashboardHeader";
-import AppDrawer from "../components/Drawers/AppDrawer";
+// import AppDrawer from "../components/Drawers/AppDrawer";
 // import AppFAQDrawer from '../components/Drawers/AppFAQDrawer.vue';
 
 export default {
@@ -95,7 +95,7 @@ export default {
   components: {
     DashboardSidebar,
     DashboardHeader,
-    AppDrawer,
+    // AppDrawer,
     // AppFAQDrawer,
   },
   data() {
@@ -113,7 +113,7 @@ export default {
       navbarFixed: false,
 
       // Settings drawer visiblility status.
-      showSettingsDrawer: false,
+      showPostDrawer: false,
 
       // Settings drawer visiblility status.
       showFAQDrawer: false,
@@ -123,8 +123,8 @@ export default {
     toggleSidebar(value) {
       this.sidebarCollapsed = value;
     },
-    toggleSettingsDrawer(value) {
-      this.showSettingsDrawer = value;
+    togglePostDrawer(value) {
+      this.showPostDrawer = value;
     },
     toggleFAQDrawer(value) {
       this.showFAQDrawer = value;

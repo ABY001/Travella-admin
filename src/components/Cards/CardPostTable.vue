@@ -15,7 +15,7 @@
           :md="12"
           style="display: flex; align-items: center; justify-content: flex-end"
         >
-          <a-button type="primary" @click="$emit('toggleSettingsDrawer', true)"
+          <a-button type="primary" @click="$emit('togglePostDrawer', true)"
             >Create Post
           </a-button>
         </a-col>
@@ -92,11 +92,16 @@
             <a-icon type="more" :style="{ color: '#000000' }" />
           </a>
           <a-menu slot="overlay">
-            <a-menu-item key="0" @click="$emit('toggleSettingsDrawer', true)"
+            <a-menu-item key="0" @click="viewRecord(row)"
               ><a-icon type="eye" /> View
             </a-menu-item>
-            <a-menu-item key="1"><a-icon type="edit" /> Edit </a-menu-item>
-            <a-menu-item key="2" :style="{ color: 'red' }"
+            <a-menu-item key="1" @click="editRecord(row)"
+              ><a-icon type="edit" /> Edit
+            </a-menu-item>
+            <a-menu-item
+              key="2"
+              @click="deleteRecord(row)"
+              :style="{ color: 'red' }"
               ><a-icon type="delete" /> Delete
             </a-menu-item>
           </a-menu></a-dropdown
@@ -109,6 +114,7 @@
 
 <script>
 import moment from "moment";
+import todos from "@/logic";
 export default {
   props: {
     data: {
@@ -127,6 +133,32 @@ export default {
     };
   },
   methods: {
+    viewRecord(row) {
+      console.log(row);
+      this.$emit("viewPostRecord", row);
+    },
+    editRecord(row) {
+      console.log(row);
+      this.$emit("editPostRecord", row);
+    },
+    async deleteRecord(row) {
+      console.log(row);
+      try {
+        let response = await todos.delete(`blog/${row._id}`);
+        console.log(response.data);
+        if (response.data.status === true) {
+          this.$notification.success({
+            message: "Success",
+            description: "Deleted successfully",
+          });
+          this.$emit("fetchPosts");
+        }
+      } catch (error) {
+        const { response } = error;
+        console.log(response);
+        return;
+      }
+    },
     convertTime(time) {
       if (!time) {
         return;

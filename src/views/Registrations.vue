@@ -12,7 +12,7 @@
         <CardUserTable
           :data="Users"
           :columns="table1Columns"
-          @toggleSettingsDrawer="toggleSettingsDrawer"
+          @togglePostDrawer="togglePostDrawer"
         ></CardUserTable>
         <!-- / Authors Table Card -->
       </a-col>
@@ -71,12 +71,12 @@ export default {
       table1Columns: table1Columns,
 
        // Settings drawer visiblility status.
-      showSettingsDrawer: false,
+      showPostDrawer: false,
     };
   },
   methods: {
-    toggleSettingsDrawer(value) {
-      this.showSettingsDrawer = value;
+    togglePostDrawer(value) {
+      this.showPostDrawer = value;
     },
   },
   // async created() {

@@ -18,10 +18,27 @@ export default {
       },
     });
   },
+  upload(todo, payload) {
+    console.log(string);
+    return axios.post(baseURL + todo, payload, {
+      headers: {
+        admin_access_token: string,
+        "Content-Type": "multipart/form-data",
+      },
+    });
+  },
   update(todo, payload) {
     return axios.patch(baseURL + todo, payload, {
       headers: {
         admin_access_token: string,
+      },
+    });
+  },
+  updateUpload(todo, payload) {
+    return axios.patch(baseURL + todo, payload, {
+      headers: {
+        admin_access_token: string,
+        "Content-Type": "multipart/form-data",
       },
     });
   },

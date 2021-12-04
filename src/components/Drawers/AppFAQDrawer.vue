@@ -3,7 +3,7 @@
   <a-drawer
     class="settings-drawer"
     :closable="false"
-    :title="`${editMode ? 'Update' : viewMode ? 'View' : 'Create'} New FAQ`"
+    :title="`${editMode ? 'Update' : viewMode ? 'View' : 'Create New'} FAQ`"
     :visible="showFAQDrawer"
     :getContainer="() => wrapper"
     @close="$emit('toggleFAQDrawer', false)"
@@ -47,28 +47,29 @@
     </a-button>
     <!-- / Settings Drawer Close Button -->
     <div>
-      <a-input
+      <a-textarea
         v-model="record.question"
         :disabled="viewMode"
         placeholder="Question"
+        :rows="1"
       />
       <div style="margin: 24px 0" />
       <a-textarea
         v-model="record.answer"
         :disabled="viewMode"
         placeholder="Answer"
-        :auto-size="{ minRows: 10, maxRows: 10 }"
+        :rows="10"
       />
       <div style="margin: 24px 0" />
       <a-row v-if="!viewMode">
         <a-col :span="24" :style="{ textAlign: 'right' }">
-          <a-button
+          <!-- <a-button
             v-if="!editMode"
             :style="{ marginRight: '8px' }"
             @click="handleReset"
           >
             Clear
-          </a-button>
+          </a-button> -->
           <a-button type="primary" html-type="submit" @click="submit">
             Submit
           </a-button></a-col
@@ -112,10 +113,21 @@ export default {
     };
   },
   computed: {
-    record() {
-      return this.editMode || this.viewMode
-        ? JSON.parse(JSON.stringify(this.editRecord))
-        : { question: "", answer: "" };
+    // record() {
+    //   return this.editMode || this.viewMode
+    //     ? JSON.parse(JSON.stringify(this.editRecord))
+    //     : { question: "", answer: "" };
+    // },
+
+    record: {
+      get: function () {
+        return this.editMode || this.viewMode
+          ? JSON.parse(JSON.stringify(this.editRecord))
+          : {};
+      },
+      set: function (newValue) {
+        console.log(newValue);
+      },
     },
   },
   watch: {

@@ -114,10 +114,6 @@ export default {
       type: Array,
       default: () => [],
     },
-    // editRecord: {
-    //   type: Object,
-    //   default: () => {},
-    // },
   },
   data() {
     return {

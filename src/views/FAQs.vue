@@ -96,7 +96,7 @@ export default {
     toggleFAQDrawer(value) {
       this.editMode = false;
       this.viewMode = false;
-      this.editRecord = {};
+      this.editRecord = { question: "", answer: "" };
       this.showFAQDrawer = value;
     },
     viewFAQRecord(value) {

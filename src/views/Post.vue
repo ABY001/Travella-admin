@@ -9,27 +9,35 @@
       <!-- Authors Table Column -->
       <a-col :span="24" class="mb-24">
         <!-- Authors Table Card -->
-        <CardTable
-          :data="Post"
+        <CardPostTable
+          :data="Posts"
           :columns="table1Columns"
-          @toggleSettingsDrawer="toggleSettingsDrawer"
-        ></CardTable>
+          :editRecord="editRecord"
+          @togglePostDrawer="togglePostDrawer"
+          @viewPostRecord="viewPostRecord"
+          @editPostRecord="editPostRecord"
+          @fetchPosts="fetchPosts"
+        ></CardPostTable>
         <!-- / Authors Table Card -->
       </a-col>
       <!-- / Authors Table Column -->
     </a-row>
     <!-- </div>
   </div> -->
-    <AppDrawer
-      :showSettingsDrawer="showSettingsDrawer"
-      @toggleSettingsDrawer="toggleSettingsDrawer"
-    ></AppDrawer>
+    <AppPostDrawer
+      :editRecord="editRecord"
+      :showPostDrawer="showPostDrawer"
+      :editMode="editMode"
+      :viewMode="viewMode"
+      @togglePostDrawer="togglePostDrawer"
+      @fetchPosts="fetchPosts"
+    ></AppPostDrawer>
   </div>
 </template>
 
 <script>
-import CardTable from "../components/Cards/CardTable";
-import AppDrawer from "../components/Drawers/AppDrawer";
+import CardPostTable from "../components/Cards/CardPostTable";
+import AppPostDrawer from "../components/Drawers/AppPostDrawer";
 import todos from "../logic";
 
 const table1Columns = [
@@ -65,30 +73,60 @@ const table1Columns = [
 ];
 export default {
   components: {
-    CardTable,
-    AppDrawer,
+    CardPostTable,
+    AppPostDrawer,
   },
   data() {
     return {
       // Associating "Authors" table data with its corresponding property.
-      Post: [],
+      Posts: [],
 
       // Associating "Authors" table columns with its corresponding property.
       table1Columns: table1Columns,
 
-       // Settings drawer visiblility status.
-      showSettingsDrawer: false,
+      // Associating "Authors" table columns with its corresponding property.
+      editRecord: {},
+
+      // Settings drawer visiblility status.
+      showPostDrawer: false,
+
+      // Settings drawer visiblility status.
+      editMode: false,
+
+      // Settings drawer visiblility status.
+      viewMode: false,
     };
   },
   methods: {
-    toggleSettingsDrawer(value) {
-      this.showSettingsDrawer = value;
+    togglePostDrawer(value) {
+      this.editMode = false;
+      this.viewMode = false;
+      this.editRecord = { question: "", answer: "" };
+      this.showPostDrawer = value;
+    },
+    viewPostRecord(value) {
+      this.editMode = false;
+      this.viewMode = true;
+      this.editRecord = value;
+      this.showPostDrawer = true;
+    },
+    editPostRecord(value) {
+      this.viewMode = false;
+      this.editRecord = value;
+      this.showPostDrawer = true;
+      this.editMode = true;
+    },
+    fetchPosts() {
+      this.getPosts();
+    },
+    async getPosts() {
+      let response = await todos.get("blog/all");
+      this.Posts = response.data.data;
+      console.log(response.data.data);
     },
   },
-  async created() {
-    let response = await todos.get("blog/all");
-    this.Post = response.data.data;
-    console.log(response.data.data);
+  created() {
+    this.getPosts();
   },
 };
 </script>

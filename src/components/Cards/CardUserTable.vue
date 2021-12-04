@@ -15,7 +15,7 @@
           :md="12"
           style="display: flex; align-items: center; justify-content: flex-end"
         >
-          <!-- <a-button type="primary" @click="$emit('toggleSettingsDrawer', true)"
+          <!-- <a-button type="primary" @click="$emit('togglePostDrawer', true)"
             >Create Post
           </a-button> -->
         </a-col>
@@ -104,7 +104,7 @@
             <a-icon type="more" :style="{ color: '#000000' }" />
           </a>
           <a-menu slot="overlay">
-            <a-menu-item key="0" @click="$emit('toggleSettingsDrawer', true)"
+            <a-menu-item key="0" @click="$emit('togglePostDrawer', true)"
               ><a-icon type="eye" /> View
             </a-menu-item>
             <a-menu-item key="1"><a-icon type="edit" /> Edit </a-menu-item>
