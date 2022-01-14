@@ -23,7 +23,6 @@ export default {
     return axios.post(baseURL + todo, payload, {
       headers: {
         admin_access_token: token?.replace(/^"(.+(?="$))"$/, "$1"),
-        "Content-Type": "multipart/form-data",
       },
     });
   },

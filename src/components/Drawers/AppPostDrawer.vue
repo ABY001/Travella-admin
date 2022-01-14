@@ -61,14 +61,37 @@
         :rows="1"
       />
       <div style="margin: 24px 0" />
-      <a-textarea
-        v-model="record.body"
+      <!-- <a-textarea
+        v-if="viewMode"
+        v-html="record.body"
         :disabled="viewMode"
         placeholder="Post Content"
         :rows="10"
       />
-      <!-- <ckeditor v-else :config="config" :value="record.body"></ckeditor> -->
-       <ckeditor :editor="editor" v-model="editorData" ></ckeditor>
+      <div style="margin: 24px 0" /> -->
+      <!-- <div class="output ql-snow">
+        <div class="ql-editor" v-html="content"></div>
+      </div>
+      <div style="margin: 24px 0" /> -->
+
+      <div class="example">
+        <quill-editor
+          class="editor"
+          ref="myTextEditor"
+          :value="editRecord.body"
+          :options="editorOption"
+          @change="onEditorChange"
+          @blur="onEditorBlur($event)"
+          @focus="onEditorFocus($event)"
+          @ready="onEditorReady($event)"
+        />
+        <!-- <div class="output code">
+          <code class="hljs" v-html="contentCode"></code>
+        </div> -->
+        <!-- <div class="output ql-snow">
+          <div class="ql-editor" v-html="content"></div>
+        </div> -->
+      </div>
       <div style="margin: 24px 0" />
       <a-row type="flex">
         <a-col :span="24" :md="12">
@@ -141,9 +164,6 @@
 </template>
 
 <script>
-import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
-// import Indent from '@ckeditor/ckeditor5-indent/src/indent';
-// import IndentBlock from '@ckeditor/ckeditor5-indent/src/indentblock';
 function getBase64(file) {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
@@ -153,7 +173,19 @@ function getBase64(file) {
   });
 }
 import todos from "@/logic";
+// import dedent from "dedent";
+import hljs from "highlight.js";
+import debounce from "lodash/debounce";
+import { quillEditor } from "vue-quill-editor";
+// import "highlight.js/styles/tomorrow.css";
+
+// import theme style
+import "quill/dist/quill.core.css";
+import "quill/dist/quill.snow.css";
 export default {
+  components: {
+    quillEditor,
+  },
   props: {
     // Post drawer visiblility status.
     showPostDrawer: {
@@ -168,6 +200,10 @@ export default {
       type: Boolean,
       default: false,
     },
+    createMode: {
+      type: Boolean,
+      default: false,
+    },
     editRecord: {
       type: Object,
       default: () => {},
@@ -175,148 +211,6 @@ export default {
   },
   data() {
     return {
-      editor: ClassicEditor,
-      editorData: "Write your blog post here",
-      // editorConfig: {
-      //   // The configuration of the editor.
-      // },
-      // editorData: "",
-      // editorConfig: {
-      //   toolbar: [
-      //     ["Source"],
-      //     ["Styles", "Format", "Font", "FontSize"],
-      //     ["Bold", "Italic", "Underline", "Strike", "Subscript", "Superscript"],
-      //     ["Cut", "Copy", "Paste", "Undo", "Redo"],
-      //     {
-      //       name: "paragraph",
-      //       items: [
-      //         "NumberedList",
-      //         "BulletedList",
-      //         "-",
-      //         "Outdent",
-      //         "Indent",
-      //         "-",
-      //         "Blockquote",
-      //         "CreateDiv",
-      //         "-",
-      //         "JustifyLeft",
-      //         "JustifyCenter",
-      //         "JustifyRight",
-      //         "JustifyBlock",
-      //         "-",
-      //         "BidiLtr",
-      //         "BidiRtl",
-      //         "Language",
-      //       ],
-      //     },
-      //     ["TextColor", "BGColor"],
-      //     ["Smiley", "SpecialChar", "PageBreak"],
-      //   ],
-      // },
-      // config: {
-      //   toolbar: [
-      //     {
-      //       name: "document",
-      //       items: [
-      //         "Source",
-      //         "-",
-      //         "Save",
-      //         "NewPage",
-      //         "ExportPdf",
-      //         "Preview",
-      //         "Print",
-      //         "-",
-      //         "Templates",
-      //       ],
-      //     },
-      //     {
-      //       name: "clipboard",
-      //       items: [
-      //         "Cut",
-      //         "Copy",
-      //         "Paste",
-      //         "PasteText",
-      //         "PasteFromWord",
-      //         "-",
-      //         "Undo",
-      //         "Redo",
-      //       ],
-      //     },
-      //     {
-      //       name: "editing",
-      //       items: ["Find", "Replace", "-", "SelectAll", "-", "Scayt"],
-      //     },
-      //     {
-      //       name: "forms",
-      //       items: [
-      //         "Form",
-      //         "Checkbox",
-      //         "Radio",
-      //         "TextField",
-      //         "Textarea",
-      //         "Select",
-      //         "Button",
-      //         "ImageButton",
-      //         "HiddenField",
-      //       ],
-      //     },
-      //     "/",
-      //     {
-      //       name: "basicstyles",
-      //       items: [
-      //         "Bold",
-      //         "Italic",
-      //         "Underline",
-      //         "Strike",
-      //         "Subscript",
-      //         "Superscript",
-      //         "-",
-      //         "CopyFormatting",
-      //         "RemoveFormat",
-      //       ],
-      //     },
-      //     {
-      //       name: "paragraph",
-      //       items: [
-      //         "NumberedList",
-      //         "BulletedList",
-      //         "-",
-      //         "Outdent",
-      //         "Indent",
-      //         "-",
-      //         "Blockquote",
-      //         "CreateDiv",
-      //         "-",
-      //         "JustifyLeft",
-      //         "JustifyCenter",
-      //         "JustifyRight",
-      //         "JustifyBlock",
-      //         "-",
-      //         "BidiLtr",
-      //         "BidiRtl",
-      //         "Language",
-      //       ],
-      //     },
-      //     { name: "links", items: ["Link", "Unlink", "Anchor"] },
-      //     {
-      //       name: "insert",
-      //       items: [
-      //         "Image",
-      //         "Table",
-      //         "HorizontalRule",
-      //         "Smiley",
-      //         "SpecialChar",
-      //         "PageBreak",
-      //         "Iframe",
-      //       ],
-      //     },
-      //     "/",
-      //     { name: "styles", items: ["Styles", "Format", "Font", "FontSize"] },
-      //     { name: "colors", items: ["TextColor", "BGColor"] },
-      //     { name: "tools", items: ["Maximize", "ShowBlocks"] },
-      //     { name: "about", items: ["About"] },
-      //   ],
-      // },
       title: "",
       body: "",
       author: "",
@@ -324,33 +218,48 @@ export default {
       image: {},
       previewVisible: false,
       previewImage: "",
-      // fileList: {},
-      // The wrapper element to attach dropdowns to.
       wrapper: document.body,
+      editorOption: {
+        modules: {
+          toolbar: [
+            ["bold", "italic", "underline", "strike"],
+            ["blockquote", "code-block"],
+            [{ header: 1 }, { header: 2 }],
+            [{ list: "ordered" }, { list: "bullet" }],
+            [{ script: "sub" }, { script: "super" }],
+            [{ indent: "-1" }, { indent: "+1" }],
+            [{ direction: "rtl" }],
+            [{ size: ["small", false, "large", "huge"] }],
+            [{ header: [1, 2, 3, 4, 5, 6, false] }],
+            [{ font: [] }],
+            [{ color: [] }, { background: [] }],
+            [{ align: [] }],
+            ["clean"],
+            ["link", "image", "video"],
+          ],
+          syntax: {
+            highlight: (text) => hljs.highlightAuto(text).value,
+          },
+        },
+      },
+      // content: this.createMode ? "" : this.editRecord.body,
+      content: this.editRecord.body,
+      // content: !this.viewMode ? this.record.body : "",
     };
   },
-  computed: {
-    record: {
-      get: function () {
-        return this.editMode || this.viewMode
-          ? JSON.parse(JSON.stringify(this.editRecord))
-          : {};
-      },
-      set: function (newValue) {
-        console.log(newValue);
-      },
-    },
-  },
-  watch: {
-    record() {
-      console.log("Foo Changed!");
-    },
-  },
-  mounted: function () {
-    // Set the wrapper to the proper element, layout wrapper.
-    this.wrapper = document.getElementById("layout-dashboard");
-  },
   methods: {
+    onEditorChange: debounce(function (value) {
+      this.editRecord.body = value.html;
+    }, 466),
+    onEditorBlur(editor) {
+      console.log("editor blur!", editor);
+    },
+    onEditorFocus(editor) {
+      console.log("editor focus!", editor);
+    },
+    onEditorReady(editor) {
+      console.log("editor ready!", editor);
+    },
     handleCancel() {
       this.previewVisible = false;
     },
@@ -396,7 +305,7 @@ export default {
       console.log("lllllllll", this.picture);
       const formData = new FormData();
       formData.append("title", this.record.title);
-      formData.append("body", this.record.body);
+      formData.append("body", this.editRecord.body);
       formData.append("author", this.record.author);
       formData.append("image", this.record.image);
 
@@ -428,7 +337,65 @@ export default {
       }
     },
   },
+  computed: {
+    // content() {
+    //   return this.viewMode || this.editMode ? this.record.body : "";
+    // },
+    editor() {
+      return this.$refs.myTextEditor?.quill;
+    },
+    contentCode() {
+      return hljs.highlightAuto(this.editRecord.body).value;
+    },
+    record: {
+      get: function () {
+        return JSON.parse(JSON.stringify(this.editRecord));
+      },
+      set: function (newValue) {
+        console.log(newValue);
+      },
+    },
+  },
+  mounted() {
+    // Set the wrapper to the proper element, layout wrapper.
+    this.wrapper = document.getElementById("layout-dashboard");
+    console.log("this is Quill instance:", this.editor);
+  },
+  watch: {
+    record() {
+      console.log("Foo Changed!");
+    },
+  },
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.example {
+  display: flex;
+  flex-direction: column;
+
+  .editor {
+    height: 15rem;
+    overflow: hidden;
+  }
+
+  .output {
+    width: 100%;
+    height: 20rem;
+    margin: 0;
+    border: 1px solid #ccc;
+    overflow-y: auto;
+    resize: vertical;
+
+    &.code {
+      padding: 1rem;
+      height: 16rem;
+    }
+
+    &.ql-snow {
+      border-top: none;
+      height: 24rem;
+    }
+  }
+}
+</style>

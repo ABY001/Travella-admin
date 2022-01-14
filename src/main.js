@@ -5,15 +5,6 @@ import App from "./App.vue";
 import DashboardLayout from "./layouts/Dashboard.vue";
 import Default from "./layouts/Default.vue";
 import router from "./router";
-import CKEditor from "@ckeditor/ckeditor5-vue2";
-// import Indent from "@ckeditor/ckeditor5-indent/src/indent";
-// import IndentBlock from "@ckeditor/ckeditor5-indent/src/indentblock";
-
-Vue.use(CKEditor);
-// Vue.use(Indent);
-// Vue.use(IndentBlock);
-
-// import './plugins/click-away'
 
 import "./scss/app.scss";
 

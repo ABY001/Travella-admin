@@ -16,6 +16,7 @@
           @togglePostDrawer="togglePostDrawer"
           @viewPostRecord="viewPostRecord"
           @editPostRecord="editPostRecord"
+          @createPostRecord="createPostRecord"
           @fetchPosts="fetchPosts"
         ></CardPostTable>
         <!-- / Authors Table Card -->
@@ -29,6 +30,7 @@
       :showPostDrawer="showPostDrawer"
       :editMode="editMode"
       :viewMode="viewMode"
+      :createMode="createMode"
       @togglePostDrawer="togglePostDrawer"
       @fetchPosts="fetchPosts"
     ></AppPostDrawer>
@@ -95,26 +97,41 @@ export default {
 
       // Settings drawer visiblility status.
       viewMode: false,
+
+      // Settings drawer visiblility status.
+      createMode: false,
     };
   },
   methods: {
     togglePostDrawer(value) {
       this.editMode = false;
       this.viewMode = false;
-      this.editRecord = { question: "", answer: "" };
+      this.createMode = false;
+      value == false
+        ? (this.editRecord = {})
+        : (this.editRecord = { question: "", answer: "" });
       this.showPostDrawer = value;
     },
     viewPostRecord(value) {
-      this.editMode = false;
-      this.viewMode = true;
       this.editRecord = value;
+      this.editMode = false;
+      this.createMode = false;
+      this.viewMode = true;
       this.showPostDrawer = true;
     },
     editPostRecord(value) {
-      this.viewMode = false;
       this.editRecord = value;
+      this.viewMode = false;
+      this.createMode = false;
       this.showPostDrawer = true;
       this.editMode = true;
+    },
+    createPostRecord(value) {
+      this.createMode = value;
+      this.editMode = false;
+      this.viewMode = false;
+      this.editRecord.body = "";
+      this.showPostDrawer = true;
     },
     fetchPosts() {
       this.getPosts();

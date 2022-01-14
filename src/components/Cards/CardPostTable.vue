@@ -15,7 +15,7 @@
           :md="12"
           style="display: flex; align-items: center; justify-content: flex-end"
         >
-          <a-button type="primary" @click="$emit('togglePostDrawer', true)"
+          <a-button type="primary" @click="$emit('createPostRecord', true)"
             >Create Post
           </a-button>
         </a-col>
@@ -140,6 +140,10 @@ export default {
     editRecord(row) {
       console.log(row);
       this.$emit("editPostRecord", row);
+    },
+    createRecord(row) {
+      console.log(row);
+      this.$emit("createPostRecord", row);
     },
     async deleteRecord(row) {
       console.log(row);
