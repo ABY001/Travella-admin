@@ -5,7 +5,6 @@ Vue.use(VueRouter);
 
 const routes = [
   {
-    // will match everything
     path: "*",
     component: () => import("../views/404.vue"),
   },
@@ -72,7 +71,6 @@ const routes = [
 ];
 
 const router = new VueRouter({
-  mode: "history",
   routes,
 });
 

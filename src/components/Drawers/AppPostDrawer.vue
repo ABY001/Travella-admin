@@ -67,6 +67,8 @@
         placeholder="Post Content"
         :rows="10"
       />
+      <!-- <ckeditor v-else :config="config" :value="record.body"></ckeditor> -->
+       <ckeditor :editor="editor" v-model="editorData" ></ckeditor>
       <div style="margin: 24px 0" />
       <a-row type="flex">
         <a-col :span="24" :md="12">
@@ -139,6 +141,9 @@
 </template>
 
 <script>
+import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+// import Indent from '@ckeditor/ckeditor5-indent/src/indent';
+// import IndentBlock from '@ckeditor/ckeditor5-indent/src/indentblock';
 function getBase64(file) {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
@@ -170,6 +175,148 @@ export default {
   },
   data() {
     return {
+      editor: ClassicEditor,
+      editorData: "Write your blog post here",
+      // editorConfig: {
+      //   // The configuration of the editor.
+      // },
+      // editorData: "",
+      // editorConfig: {
+      //   toolbar: [
+      //     ["Source"],
+      //     ["Styles", "Format", "Font", "FontSize"],
+      //     ["Bold", "Italic", "Underline", "Strike", "Subscript", "Superscript"],
+      //     ["Cut", "Copy", "Paste", "Undo", "Redo"],
+      //     {
+      //       name: "paragraph",
+      //       items: [
+      //         "NumberedList",
+      //         "BulletedList",
+      //         "-",
+      //         "Outdent",
+      //         "Indent",
+      //         "-",
+      //         "Blockquote",
+      //         "CreateDiv",
+      //         "-",
+      //         "JustifyLeft",
+      //         "JustifyCenter",
+      //         "JustifyRight",
+      //         "JustifyBlock",
+      //         "-",
+      //         "BidiLtr",
+      //         "BidiRtl",
+      //         "Language",
+      //       ],
+      //     },
+      //     ["TextColor", "BGColor"],
+      //     ["Smiley", "SpecialChar", "PageBreak"],
+      //   ],
+      // },
+      // config: {
+      //   toolbar: [
+      //     {
+      //       name: "document",
+      //       items: [
+      //         "Source",
+      //         "-",
+      //         "Save",
+      //         "NewPage",
+      //         "ExportPdf",
+      //         "Preview",
+      //         "Print",
+      //         "-",
+      //         "Templates",
+      //       ],
+      //     },
+      //     {
+      //       name: "clipboard",
+      //       items: [
+      //         "Cut",
+      //         "Copy",
+      //         "Paste",
+      //         "PasteText",
+      //         "PasteFromWord",
+      //         "-",
+      //         "Undo",
+      //         "Redo",
+      //       ],
+      //     },
+      //     {
+      //       name: "editing",
+      //       items: ["Find", "Replace", "-", "SelectAll", "-", "Scayt"],
+      //     },
+      //     {
+      //       name: "forms",
+      //       items: [
+      //         "Form",
+      //         "Checkbox",
+      //         "Radio",
+      //         "TextField",
+      //         "Textarea",
+      //         "Select",
+      //         "Button",
+      //         "ImageButton",
+      //         "HiddenField",
+      //       ],
+      //     },
+      //     "/",
+      //     {
+      //       name: "basicstyles",
+      //       items: [
+      //         "Bold",
+      //         "Italic",
+      //         "Underline",
+      //         "Strike",
+      //         "Subscript",
+      //         "Superscript",
+      //         "-",
+      //         "CopyFormatting",
+      //         "RemoveFormat",
+      //       ],
+      //     },
+      //     {
+      //       name: "paragraph",
+      //       items: [
+      //         "NumberedList",
+      //         "BulletedList",
+      //         "-",
+      //         "Outdent",
+      //         "Indent",
+      //         "-",
+      //         "Blockquote",
+      //         "CreateDiv",
+      //         "-",
+      //         "JustifyLeft",
+      //         "JustifyCenter",
+      //         "JustifyRight",
+      //         "JustifyBlock",
+      //         "-",
+      //         "BidiLtr",
+      //         "BidiRtl",
+      //         "Language",
+      //       ],
+      //     },
+      //     { name: "links", items: ["Link", "Unlink", "Anchor"] },
+      //     {
+      //       name: "insert",
+      //       items: [
+      //         "Image",
+      //         "Table",
+      //         "HorizontalRule",
+      //         "Smiley",
+      //         "SpecialChar",
+      //         "PageBreak",
+      //         "Iframe",
+      //       ],
+      //     },
+      //     "/",
+      //     { name: "styles", items: ["Styles", "Format", "Font", "FontSize"] },
+      //     { name: "colors", items: ["TextColor", "BGColor"] },
+      //     { name: "tools", items: ["Maximize", "ShowBlocks"] },
+      //     { name: "about", items: ["About"] },
+      //   ],
+      // },
       title: "",
       body: "",
       author: "",
